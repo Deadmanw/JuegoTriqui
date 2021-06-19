@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            html,body{
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+                
+            }
+            .botones{
+                width: 80px;
+                height: 80px;
+                color: white;
+                background-color: black;
+                font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <H1>
+            Triqui hecho con Node.js
+        </H1>
+        <label for="letras">letra</label>
+        <select name="letras" id="letras"> </select>
+        <table border=0>
+            <tr>
+                <td><input type=button value="" name="btn1" id="btn1" class="botones" onclick="jugada(1)"></td>
+                <td><input type=button value="" name="btn2" id="btn2" class="botones" onclick="jugada(2)"></td>
+                <td><input type=button value="" name="btn3" id="btn3" class="botones" onclick="jugada(3)"></td>
+            </tr>
+            <tr>
+                <td><input type=button value="" name="btn4" id="btn4" class="botones" onclick="jugada(4)"></td>
+                <td><input type=button value="" name="btn5" id="btn5" class="botones" onclick="jugada(5)"></td>
+                <td><input type=button value="" name="btn6" id="btn6" class="botones" onclick="jugada(6)"></td>
+            </tr>
+            <tr>
+                <td><input type=button value="" name="btn7" id="btn7" class="botones" onclick="jugada(7)"></td>
+                <td><input type=button value="" name="btn8" id="btn8" class="botones" onclick="jugada(8)"></td>
+                <td><input type=button value="" name="btn9" id="btn9" class="botones" onclick="jugada(9)"></td>
+            </tr>
+            
+        </table>
+        <h2>Daniel Rodriguez y Jerson bustos</h2>
+        
+    </body>
+</html>
+<script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script>
+<script src ="/socket.io/socket.io.js" ></script>
+<script>
+    var socket = io.connect();
+    var jugador = document.getElementById("letras");
+    
+    function jugada(cuadro){
+        document.getElementById("btn"+cuadro).value=jugador.value;
+        socket.emit("jugada",{id: jugador.value,id2:cuadro});
+        
+    }
+    
+    var letra=document.getElementById("letras");
+    letra.options[0] = new  Option("X","X");
+    letra.options[1] = new Option("O","O");
+    
+    socket.on('jugada2',function (data){
+        document.getElementById("btn"+data.id2).value=data.id;
+    });
+    
+</script>
